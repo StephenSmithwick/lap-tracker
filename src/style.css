@@ -1,0 +1,39 @@
+:root {
+    --bg-color: #ccdce2;
+    --card-bg: #fff;
+    --text-main: #01093e;
+    --text-muted: #4f4f59;
+    --border-color: #86afbe;
+    --accent-color: #018fc0;
+    --delete-color: #d13f0b;
+    --delete-hover: #fee2e2;
+    --error-color: #d13f0b;
+    --error-bg: #fee2e2;
+    --label-bg: #ccd8de;
+    --label-text: #96157f;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --border-radius: 8px;
+}
+
+body {
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: var(--spacing-md);
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+@media (min-width: 640px) {
+}

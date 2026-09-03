@@ -1,0 +1,146 @@
+{
+  "version": "8",
+  "dialect": "postgres",
+  "id": "18aee917-a62d-493d-9e8d-e556f9d3a87b",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "ddl": [
+    {
+      "isRlsEnabled": false,
+      "name": "lap",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "runner",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "type": "serial",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "lap"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "runner",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "lap"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "time",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "lap"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "runner",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "runner"
+    },
+    {
+      "type": "json",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "info",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "runner"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "runner",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "runner_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "lap"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "runner"
+      ],
+      "schemaTo": "public",
+      "tableTo": "runner",
+      "columnsTo": [
+        "runner"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "name": "lap_runner_runner_runner_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "lap"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "lap_pkey",
+      "schema": "public",
+      "table": "lap",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "runner"
+      ],
+      "nameExplicit": false,
+      "name": "runner_pkey",
+      "schema": "public",
+      "table": "runner",
+      "entityType": "pks"
+    }
+  ],
+  "renames": []
+}
