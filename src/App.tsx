@@ -1,6 +1,5 @@
-import { Component, createResource } from "solid-js";
-import { ApiClient } from "@/Api";
-import { renderToStringAsync } from "solid-js/web";
+import { Component } from "solid-js";
+import { ApiClient } from "@/api";
 import { AppContext } from "@/context";
 import { Laps } from "./components/Laps";
 
@@ -17,6 +16,4 @@ export const App: Component<AppProps> = ({ api }) => {
   );
 };
 
-export const renderApp = async ({ api }: AppProps) => {
-  return renderToStringAsync(() => <App api={api} />);
-};
+export const createApp = (props: AppProps) => <App {...props} />;

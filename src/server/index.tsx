@@ -5,15 +5,20 @@ import { raw } from "hono/html";
 import { createAPI } from "@/api";
 import { neonDB } from "@/db/db";
 import { renderer } from "./renderer";
-import { renderApp } from "@/App";
+import { createApp } from "@/App";
 import { createApiProxy } from "./ApiProxy";
+import { renderToStringAsync } from "solid-js/web";
 
 const api = createAPI(neonDB);
-const client = createApiProxy(api);
+const apiClient = createApiProxy(api);
 const root = new Hono()
   .use(renderer)
   .get("/", async (c: Context) =>
-    c.render(<div id="root">{raw(await renderApp({ api: client(c) }))}</div>),
+    c.render(
+      <div id="root">
+        {raw(await renderToStringAsync(() => createApp({ api: apiClient(c) })))}
+      </div>,
+    ),
   )
   .route("/", api);
 
