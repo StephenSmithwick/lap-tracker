@@ -1,11 +1,17 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "18aee917-a62d-493d-9e8d-e556f9d3a87b",
+  "id": "d32129bc-79df-441b-b60e-4ca4a51b40bb",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
   "ddl": [
+    {
+      "isRlsEnabled": false,
+      "name": "group",
+      "entityType": "tables",
+      "schema": "public"
+    },
     {
       "isRlsEnabled": false,
       "name": "lap",
@@ -17,6 +23,32 @@
       "name": "runner",
       "entityType": "tables",
       "schema": "public"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "group"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "group"
     },
     {
       "type": "serial",
@@ -39,7 +71,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "runner",
+      "name": "runner_ref",
       "entityType": "columns",
       "schema": "public",
       "table": "lap"
@@ -52,7 +84,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "time",
+      "name": "timestamp",
       "entityType": "columns",
       "schema": "public",
       "table": "lap"
@@ -65,7 +97,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "runner",
+      "name": "ref",
       "entityType": "columns",
       "schema": "public",
       "table": "runner"
@@ -84,10 +116,23 @@
       "table": "runner"
     },
     {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "group_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "runner"
+    },
+    {
       "nameExplicit": true,
       "columns": [
         {
-          "value": "runner",
+          "value": "runner_ref",
           "isExpression": false,
           "asc": true,
           "nullsFirst": false,
@@ -99,7 +144,7 @@
       "with": "",
       "method": "btree",
       "concurrently": false,
-      "name": "runner_idx",
+      "name": "runner_ref_idx",
       "entityType": "indexes",
       "schema": "public",
       "table": "lap"
@@ -107,19 +152,46 @@
     {
       "nameExplicit": false,
       "columns": [
-        "runner"
+        "runner_ref"
       ],
       "schemaTo": "public",
       "tableTo": "runner",
       "columnsTo": [
-        "runner"
+        "ref"
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "lap_runner_runner_runner_fkey",
+      "name": "lap_runner_ref_runner_ref_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "lap"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "group_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "group",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "name": "runner_group_id_group_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "runner"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "group_pkey",
+      "schema": "public",
+      "table": "group",
+      "entityType": "pks"
     },
     {
       "columns": [
@@ -133,7 +205,7 @@
     },
     {
       "columns": [
-        "runner"
+        "ref"
       ],
       "nameExplicit": false,
       "name": "runner_pkey",

@@ -1,6 +1,6 @@
 import { App } from "@/App";
 import { hydrate } from "solid-js/web";
-import { ApiType } from "@/api";
+import { ApiType } from "@/Api";
 import { hc } from "hono/client";
 
 const client = hc<ApiType>(window.location?.origin ?? "");
