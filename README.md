@@ -18,3 +18,4 @@ We use cloudflare bindings to store secrets in the cloud.  Use wrangler to put s
 
 - Add a secret - `pnpm exec wrangler secret put DATABASE_URL`
 - Generate types - `pnpm exec wrangler types --env-interface CloudflareBindings`
+- Deploy - `pnpm run deploy`

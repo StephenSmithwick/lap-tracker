@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && $npm_execpath run build:pwa",
-    "build:pwa": "tsx scripts/generate-service-worker.ts",
+    "build:pwa": "tsx build/generate-service-worker.ts",
     "preview": "$npm_execpath run build && vite preview",
     "deploy": "$npm_execpath run build && wrangler deploy"
   },
