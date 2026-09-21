@@ -1,9 +1,9 @@
 import { context } from "@/context";
-import { Component, createResource, For, Show, Suspense } from "solid-js";
+import { Component, createResource, For, Suspense } from "solid-js";
 
 export const Laps: Component = () => {
   const { api } = context();
-  const [laps, { refetch: refetchLaps }] = createResource(async () => {
+  const [laps] = createResource(async () => {
     const res = await api.laps.$get();
     return res.json();
   });

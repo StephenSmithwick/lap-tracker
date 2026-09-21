@@ -1,4 +1,4 @@
-import { Hono, MiddlewareHandler } from "hono";
+import { Hono } from "hono";
 import { hc } from "hono/client";
 import { LoadDB, DB, setDB, db } from "@/db/db";
 import { lap } from "@/db/schema";

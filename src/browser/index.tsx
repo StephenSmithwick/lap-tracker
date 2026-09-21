@@ -1,6 +1,6 @@
 import { App } from "@/App";
 import { hydrate } from "solid-js/web";
-import { ApiType } from "@/Api";
+import { ApiType } from "@/api";
 import { hc } from "hono/client";
 
 const client = hc<ApiType>(window.location?.origin ?? "");
@@ -11,4 +11,4 @@ if (import.meta.env.PROD && "serviceWorker" in navigator) {
   });
 }
 
-hydrate(() => <App client={client} />, document.getElementById("root")!);
+hydrate(() => <App api={client} />, document.getElementById("root")!);

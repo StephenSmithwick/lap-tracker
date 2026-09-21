@@ -1,5 +1,5 @@
 import { createContext, useContext } from "solid-js";
-import type { ApiClient } from "@/Api";
+import type { ApiClient } from "@/api";
 
 export interface AppContextValue {
   api: ApiClient;

@@ -7,9 +7,10 @@ interface AppProps {
   api: ApiClient;
 }
 
-export const App: Component<AppProps> = ({ api }) => {
+export const App: Component<AppProps> = (props) => {
   return (
-    <AppContext.Provider value={{ api }}>
+    // eslint-disable-next-line solid/reactivity -- api doesn't change
+    <AppContext.Provider value={{ api: props.api }}>
       <h1>Laps</h1>
       <Laps />
     </AppContext.Provider>

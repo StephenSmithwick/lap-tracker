@@ -6,7 +6,7 @@ export const workboxOptions = {
   skipWaiting: true,
   runtimeCaching: [
     {
-      urlPattern: /\/(worklog|label)/,
+      urlPattern: /\/laps/,
       handler: "NetworkFirst",
       options: {
         cacheName: "hono-rpc-cache",

@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "build": "vite build && $npm_execpath run build:pwa",
     "build:pwa": "tsx build/generate-service-worker.ts",
     "preview": "$npm_execpath run build && vite preview",
-    "deploy": "$npm_execpath run build && wrangler deploy"
+    "deploy": "$npm_execpath run build && wrangler deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "keywords": [
     "qr code",
@@ -19,9 +22,14 @@
   "packageManager": "pnpm@10.12.1",
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.54.3",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^26.4.1",
     "drizzle-kit": "1.0.0-rc.4",
+    "eslint": "^10.10.0",
+    "eslint-plugin-solid": "^0.18.0",
+    "globals": "^17.12.0",
     "tsx": "^4.23.13",
+    "typescript-eslint": "^8.70.0",
     "vite": "^8.2.2",
     "vite-plugin-solid": "^2.11.14",
     "vite-ssr-components": "^0.6.1",

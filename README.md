@@ -1,5 +1,5 @@
 # Lap Tracker
-This is a simple lap tracking app that consists of 2 tables
+This is a simple lap tracking app that consists of 3 tables
 
 This project has been developped using pnpm to get started developing
 

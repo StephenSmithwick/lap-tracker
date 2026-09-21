@@ -14,7 +14,7 @@ export const neonDB: LoadDB = async (env) => createNeonDB(env!.DATABASE_URL);
 export const db = (c: ApiContext) => c.var.db;
 
 export function setDB(loadDB: LoadDB): MiddlewareHandler<ApiEnv> {
-  return async (c: any, next) => {
+  return async (c, next) => {
     c.set("db", await loadDB(c.env));
     await next();
   };
