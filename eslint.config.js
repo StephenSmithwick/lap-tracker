@@ -5,7 +5,12 @@ import globals from "globals";
 
 export default tseslint.config(
   {
-    ignores: ["dist/**", ".wrangler/**", "drizzle/**"],
+    ignores: [
+      "dist/**",
+      ".wrangler/**",
+      "drizzle/**",
+      "worker-configuration.d.ts",
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

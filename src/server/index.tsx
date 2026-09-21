@@ -10,13 +10,13 @@ import { createApiProxy } from "./ApiProxy";
 import { renderToStringAsync } from "solid-js/web";
 
 const api = createAPI(neonDB);
-const apiClient = createApiProxy(api);
+const apiProxy = createApiProxy(api);
 const root = new Hono()
   .use(renderer)
   .get("/", async (c: Context) =>
     c.render(
       <div id="root">
-        {raw(await renderToStringAsync(() => createApp({ api: apiClient(c) })))}
+        {raw(await renderToStringAsync(() => createApp({ api: apiProxy(c) })))}
       </div>,
     ),
   )
