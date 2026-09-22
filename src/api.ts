@@ -14,8 +14,8 @@ export type ApiEnv = {
   };
 };
 
-type LapRow = typeof lap.$inferSelect;
-export interface LapData extends Omit<LapRow, "timestamp"> {
+type Lap = typeof lap.$inferSelect;
+export interface LapData extends Omit<Lap, "timestamp"> {
   timestamp: string;
 }
 
@@ -32,7 +32,7 @@ export const createAPI = (loadDB: LoadDB) =>
       const result = await db(c)
         .select({
           id: lap.id,
-          runnerRef: lap.runner,
+          runner: lap.runner,
           timestamp: lap.timestamp,
         })
         .from(lap)

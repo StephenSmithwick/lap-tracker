@@ -5,6 +5,16 @@ import { PGlite } from "@electric-sql/pglite";
 import { user, race, userRace, lap, runner } from "@/db/schema";
 
 let snapshot: File | Blob | undefined = undefined;
+interface TestDB extends DB {
+  seed: (values: {
+    user?: User[];
+    userRace?: UserRace[];
+    race?: Race[];
+    runner?: Runner[];
+    lap?: Lap[];
+  }) => Promise<void>;
+}
+
 export const inMemoryDB: LoadDB = async () => {
   if (snapshot) {
     const client = new PGlite({ loadDataDir: snapshot });
@@ -36,7 +46,7 @@ export const dbSeed = (db: DB) => {
     runner?: Runner[];
     lap?: Lap[];
   }) => {
-    db.transaction(async (tx) => {
+    await db.transaction(async (tx) => {
       if (values.race) await tx.insert(race).values(values.race);
       if (values.runner) await tx.insert(runner).values(values.runner);
       if (values.user) await tx.insert(user).values(values.user);

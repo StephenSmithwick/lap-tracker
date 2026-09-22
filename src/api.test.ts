@@ -47,7 +47,7 @@ describe("laps.$get", () => {
     expect(await res.json()).toEqual([
       {
         id: 1,
-        runnerRef: "00000000-0000-0000-0000-000000000001",
+        runner: "00000000-0000-0000-0000-000000000001",
         timestamp: "2020-01-01T12:00:00.000Z",
       },
     ]);

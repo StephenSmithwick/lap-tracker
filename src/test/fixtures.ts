@@ -4,8 +4,9 @@ import { vi } from "vitest";
 export function testLap(overrides: Partial<LapData> = {}): LapData {
   return {
     id: 1,
-    runnerRef: "00000000-0000-0000-0000-000000000001",
+    runner: uuid(1),
     timestamp: "1970-01-01T00:00:00.000Z",
+    race: uuid(1),
     ...overrides,
   };
 }

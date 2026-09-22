@@ -21,15 +21,15 @@ CREATE TABLE "user" (
 	"selected_race_id" uuid
 );
 --> statement-breakpoint
-CREATE TABLE "user_group" (
+CREATE TABLE "user_race" (
 	"user_sub" text,
 	"race_id" uuid,
-	CONSTRAINT "user_group_pkey" PRIMARY KEY("user_sub","race_id")
+	CONSTRAINT "user_race_pkey" PRIMARY KEY("user_sub","race_id")
 );
 --> statement-breakpoint
 CREATE INDEX "runner_ref_idx" ON "lap" ("runner_ref");--> statement-breakpoint
 ALTER TABLE "lap" ADD CONSTRAINT "lap_runner_ref_runner_ref_fkey" FOREIGN KEY ("runner_ref") REFERENCES "runner"("ref");--> statement-breakpoint
 ALTER TABLE "lap" ADD CONSTRAINT "lap_race_id_race_id_fkey" FOREIGN KEY ("race_id") REFERENCES "race"("id");--> statement-breakpoint
 ALTER TABLE "user" ADD CONSTRAINT "user_selected_race_id_race_id_fkey" FOREIGN KEY ("selected_race_id") REFERENCES "race"("id") ON DELETE SET NULL;--> statement-breakpoint
-ALTER TABLE "user_group" ADD CONSTRAINT "user_group_user_sub_user_sub_fkey" FOREIGN KEY ("user_sub") REFERENCES "user"("sub") ON DELETE CASCADE;--> statement-breakpoint
-ALTER TABLE "user_group" ADD CONSTRAINT "user_group_race_id_race_id_fkey" FOREIGN KEY ("race_id") REFERENCES "race"("id") ON DELETE CASCADE;
+ALTER TABLE "user_race" ADD CONSTRAINT "user_race_user_sub_user_sub_fkey" FOREIGN KEY ("user_sub") REFERENCES "user"("sub") ON DELETE CASCADE;--> statement-breakpoint
+ALTER TABLE "user_race" ADD CONSTRAINT "user_race_race_id_race_id_fkey" FOREIGN KEY ("race_id") REFERENCES "race"("id") ON DELETE CASCADE;

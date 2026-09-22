@@ -3,8 +3,8 @@ export class LapsView {
 
   items() {
     return [...this.container.querySelectorAll("li")].map((li) => {
-      const [runnerRef, timestamp] = li.textContent!.split(" at ");
-      return { runnerRef, timestamp };
+      const [runner, timestamp] = li.textContent!.split(" at ");
+      return { runner, timestamp };
     });
   }
 

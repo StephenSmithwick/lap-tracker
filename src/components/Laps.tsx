@@ -14,7 +14,7 @@ export const Laps: Component = () => {
         <For each={laps()}>
           {(lap) => (
             <li>
-              {lap.runnerRef} at {lap.timestamp}
+              {lap.runner} at {lap.timestamp}
             </li>
           )}
         </For>

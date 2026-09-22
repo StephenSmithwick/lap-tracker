@@ -41,7 +41,7 @@ export const user = pgTable("user", {
 });
 
 export const userRace = pgTable(
-  "user_group",
+  "user_race",
   {
     user: text("user_sub")
       .notNull()
