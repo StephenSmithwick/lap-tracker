@@ -1,20 +1,20 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "d32129bc-79df-441b-b60e-4ca4a51b40bb",
+  "id": "ac93a85b-682c-489f-818c-dbc102b40cf1",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
   "ddl": [
     {
       "isRlsEnabled": false,
-      "name": "group",
+      "name": "lap",
       "entityType": "tables",
       "schema": "public"
     },
     {
       "isRlsEnabled": false,
-      "name": "lap",
+      "name": "race",
       "entityType": "tables",
       "schema": "public"
     },
@@ -25,30 +25,16 @@
       "schema": "public"
     },
     {
-      "type": "uuid",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "gen_random_uuid()",
-      "generated": null,
-      "identity": null,
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "group"
+      "isRlsEnabled": false,
+      "name": "user",
+      "entityType": "tables",
+      "schema": "public"
     },
     {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "name",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "group"
+      "isRlsEnabled": false,
+      "name": "user_group",
+      "entityType": "tables",
+      "schema": "public"
     },
     {
       "type": "serial",
@@ -77,6 +63,19 @@
       "table": "lap"
     },
     {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "race_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "lap"
+    },
+    {
       "type": "timestamp with time zone",
       "typeSchema": null,
       "notNull": true,
@@ -88,6 +87,32 @@
       "entityType": "columns",
       "schema": "public",
       "table": "lap"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "race"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "race"
     },
     {
       "type": "uuid",
@@ -116,6 +141,58 @@
       "table": "runner"
     },
     {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "sub",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "user"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "user"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "selected_race_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "user"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "user_sub",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "user_group"
+    },
+    {
       "type": "uuid",
       "typeSchema": null,
       "notNull": true,
@@ -123,10 +200,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "group_id",
+      "name": "race_id",
       "entityType": "columns",
       "schema": "public",
-      "table": "runner"
+      "table": "user_group"
     },
     {
       "nameExplicit": true,
@@ -169,29 +246,81 @@
     {
       "nameExplicit": false,
       "columns": [
-        "group_id"
+        "race_id"
       ],
       "schemaTo": "public",
-      "tableTo": "group",
+      "tableTo": "race",
       "columnsTo": [
         "id"
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "runner_group_id_group_id_fkey",
+      "name": "lap_race_id_race_id_fkey",
       "entityType": "fks",
       "schema": "public",
-      "table": "runner"
+      "table": "lap"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "selected_race_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "race",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "SET NULL",
+      "name": "user_selected_race_id_race_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "user"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "user_sub"
+      ],
+      "schemaTo": "public",
+      "tableTo": "user",
+      "columnsTo": [
+        "sub"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "user_group_user_sub_user_sub_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "user_group"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "race_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "race",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "user_group_race_id_race_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "user_group"
     },
     {
       "columns": [
-        "id"
+        "user_sub",
+        "race_id"
       ],
       "nameExplicit": false,
-      "name": "group_pkey",
+      "name": "user_group_pkey",
+      "entityType": "pks",
       "schema": "public",
-      "table": "group",
-      "entityType": "pks"
+      "table": "user_group"
     },
     {
       "columns": [
@@ -205,12 +334,32 @@
     },
     {
       "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "race_pkey",
+      "schema": "public",
+      "table": "race",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
         "ref"
       ],
       "nameExplicit": false,
       "name": "runner_pkey",
       "schema": "public",
       "table": "runner",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "sub"
+      ],
+      "nameExplicit": false,
+      "name": "user_pkey",
+      "schema": "public",
+      "table": "user",
       "entityType": "pks"
     }
   ],

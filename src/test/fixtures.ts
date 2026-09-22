@@ -10,7 +10,13 @@ export function testLap(overrides: Partial<LapData> = {}): LapData {
   };
 }
 
+export function uuid(id: number) {
+  const end = `${id}`.padStart(12, "0");
+  return `00000000-0000-0000-0000-${end}`;
+}
+
 export const jsonResponse = (json: unknown) =>
   new Response(JSON.stringify(json));
+
 export const mockJSONRequest = (object: unknown) =>
   vi.fn().mockResolvedValue(jsonResponse(object));
