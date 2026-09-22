@@ -6,10 +6,16 @@ import { Context } from "hono";
 import { errorHandler } from "./errors";
 
 export type ApiEnv = {
+  Bindings: CloudflareBindings;
   Variables: {
     db: DB;
   };
 };
+
+type LapRow = typeof lap.$inferSelect;
+export interface LapData extends Omit<LapRow, "timestamp"> {
+  timestamp: string;
+}
 
 export type ApiContext = Context<ApiEnv>;
 export type ApiType = ReturnType<typeof createAPI>;

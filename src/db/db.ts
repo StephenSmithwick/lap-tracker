@@ -1,15 +1,16 @@
 import { ApiContext, ApiEnv } from "@/api";
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle as drizzleNeon } from "drizzle-orm/neon-http";
+import { drizzle as drizzlePGlite } from "drizzle-orm/pglite";
 import { MiddlewareHandler } from "hono";
+
 interface ENV {
   DATABASE_URL: string;
 }
 
-export type DB = ReturnType<typeof createNeonDB>;
+export type DB = ReturnType<typeof drizzleNeon> | ReturnType<typeof drizzlePGlite>;
 export type LoadDB = (env?: ENV) => Promise<DB>;
 
-const createNeonDB = (url: string) => drizzle(url);
-export const neonDB: LoadDB = async (env) => createNeonDB(env!.DATABASE_URL);
+export const neonDB: LoadDB = async (env) => drizzleNeon(env!.DATABASE_URL);
 
 export const db = (c: ApiContext) => c.var.db;
 
