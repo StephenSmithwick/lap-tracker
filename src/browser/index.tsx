@@ -2,6 +2,7 @@ import { App } from "@/App";
 import { hydrate } from "solid-js/web";
 import { ApiType } from "@/api";
 import { hc } from "hono/client";
+import { browserScanner } from "@/scanner";
 
 const api = hc<ApiType>(window.location?.origin ?? "");
 
@@ -11,4 +12,7 @@ if (import.meta.env.PROD && "serviceWorker" in navigator) {
   });
 }
 
-hydrate(() => <App api={api} />, document.getElementById("root")!);
+hydrate(
+  () => <App api={api} scanner={browserScanner} />,
+  document.getElementById("root")!,
+);

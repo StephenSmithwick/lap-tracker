@@ -2,6 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "laps",
   "compatibility_date": "2026-07-09",
+  "compatibility_flags": ["nodejs_compat"],
   "main": "./src/server/index.tsx",
   "assets": {
     "not_found_handling": "single-page-application",

@@ -1,8 +1,10 @@
 import { createContext, useContext } from "solid-js";
 import type { ApiClient } from "@/api";
+import type { QrScanner } from "@/scanner";
 
 export interface AppContextValue {
   api: ApiClient;
+  scanner: QrScanner;
 }
 
 export const AppContext = createContext<AppContextValue>();

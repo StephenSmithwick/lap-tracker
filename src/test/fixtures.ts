@@ -1,4 +1,4 @@
-import type { LapData } from "@/api";
+import type { LapData, RaceData } from "@/api";
 import { vi } from "vitest";
 
 export function testLap(overrides: Partial<LapData> = {}): LapData {
@@ -7,6 +7,14 @@ export function testLap(overrides: Partial<LapData> = {}): LapData {
     runner: uuid(1),
     timestamp: "1970-01-01T00:00:00.000Z",
     race: uuid(1),
+    ...overrides,
+  };
+}
+
+export function testRace(overrides: Partial<RaceData> = {}): RaceData {
+  return {
+    id: uuid(1),
+    name: "Spring 5k",
     ...overrides,
   };
 }

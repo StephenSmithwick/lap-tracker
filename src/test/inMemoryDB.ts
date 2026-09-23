@@ -5,15 +5,6 @@ import { PGlite } from "@electric-sql/pglite";
 import { user, race, userRace, lap, runner } from "@/db/schema";
 
 let snapshot: File | Blob | undefined = undefined;
-interface TestDB extends DB {
-  seed: (values: {
-    user?: User[];
-    userRace?: UserRace[];
-    race?: Race[];
-    runner?: Runner[];
-    lap?: Lap[];
-  }) => Promise<void>;
-}
 
 export const inMemoryDB: LoadDB = async () => {
   if (snapshot) {

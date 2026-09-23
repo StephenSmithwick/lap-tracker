@@ -10,7 +10,7 @@ export const Laps: Component = () => {
 
   return (
     <Suspense fallback={<p>Loading laps...</p>}>
-      <ul>
+      <ul class="laps">
         <For each={laps()}>
           {(lap) => (
             <li>

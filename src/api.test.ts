@@ -53,3 +53,66 @@ describe("laps.$get", () => {
     ]);
   });
 });
+
+describe("races", () => {
+  it("creates a race, grants access, and selects it", async () => {
+    const { client, seed } = await setup();
+    await seed({ user: [{ sub: "user", name: "user" }] });
+
+    const createRes = await client.races.$post(
+      { json: { name: "Spring 5k" } },
+      await headers("user"),
+    );
+    expect(createRes.status).toBe(200);
+    const created = await createRes.json();
+    expect(created).toMatchObject({ name: "Spring 5k" });
+
+    const selectedRes = await client.races.selected.$get(
+      {},
+      await headers("user"),
+    );
+    expect(await selectedRes.json()).toEqual(created);
+  });
+
+  it("rejects creating a race without a name", async () => {
+    const { client, seed } = await setup();
+    await seed({ user: [{ sub: "user", name: "user" }] });
+
+    const res = await client.races.$post(
+      { json: { name: "" } },
+      await headers("user"),
+    );
+    expect(res.status).toBe(400);
+  });
+
+  it("joins an existing race and makes it the user's selected race", async () => {
+    const { client, seed } = await setup();
+    await seed({
+      user: [{ sub: "user", name: "user" }],
+      race: [{ id: uuid(3), name: "Trail Run" }],
+    });
+
+    const res = await client.races[":id"].join.$post(
+      { param: { id: uuid(3) } },
+      await headers("user"),
+    );
+    expect(await res.json()).toEqual({ id: uuid(3), name: "Trail Run" });
+
+    const selectedRes = await client.races.selected.$get(
+      {},
+      await headers("user"),
+    );
+    expect(await selectedRes.json()).toEqual({ id: uuid(3), name: "Trail Run" });
+  });
+
+  it("404s when joining an unknown race id", async () => {
+    const { client, seed } = await setup();
+    await seed({ user: [{ sub: "user", name: "user" }] });
+
+    const res = await client.races[":id"].join.$post(
+      { param: { id: uuid(9) } },
+      await headers("user"),
+    );
+    expect(res.status).toBe(404);
+  });
+});
