@@ -1,12 +1,13 @@
 import { Hono } from "hono";
 import { hc } from "hono/client";
-import { eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import { LoadDB, DB, setDB, db } from "@/db/db";
-import { lap, race, user, userRace } from "@/db/schema";
+import { lap, race, runner, user, userRace } from "@/db/schema";
 import { Context } from "hono";
 import { errorHandler } from "./errors";
 import { requireAuthCookie, authUser } from "./security";
+import { runnerRef } from "./runner";
 
 export type ApiEnv = {
   Bindings: CloudflareBindings;
@@ -23,6 +24,14 @@ export interface LapData extends Omit<Lap, "timestamp"> {
 export interface RaceData {
   id: string;
   name: string;
+}
+
+export type RunnerData = typeof runner.$inferSelect;
+
+export interface ScanResult {
+  runner: RunnerData;
+  race: RaceData;
+  lapCount: number;
 }
 
 export type ApiContext = Context<ApiEnv>;
@@ -90,4 +99,41 @@ export const createAPI = (loadDB: LoadDB) =>
         .where(eq(user.sub, authUser(c).sub));
 
       return c.json<RaceData>(found);
+    })
+    .post("/runners/scan", async (c) => {
+      const { data } = await c.req.json<{ data: string }>();
+      if (!data?.trim())
+        throw new HTTPException(400, { message: "data is required" });
+
+      const [selected] = await db(c)
+        .select({ id: race.id, name: race.name })
+        .from(user)
+        .innerJoin(race, eq(race.id, user.selectedRace))
+        .where(eq(user.sub, authUser(c).sub));
+      if (!selected)
+        throw new HTTPException(400, { message: "No race selected" });
+
+      const ref = await runnerRef(data);
+      await db(c)
+        .insert(runner)
+        .values({ ref, info: data })
+        .onConflictDoNothing();
+      await db(c)
+        .insert(lap)
+        .values({ runner: ref, race: selected.id, timestamp: new Date() });
+
+      const [runnerRow] = await db(c)
+        .select()
+        .from(runner)
+        .where(eq(runner.ref, ref));
+      const [{ lapCount }] = await db(c)
+        .select({ lapCount: count() })
+        .from(lap)
+        .where(and(eq(lap.runner, ref), eq(lap.race, selected.id)));
+
+      return c.json<ScanResult>({
+        runner: runnerRow!,
+        race: selected,
+        lapCount,
+      });
     });

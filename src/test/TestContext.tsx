@@ -16,6 +16,9 @@ type ApiOverrides = {
       join?: MockedApi<ApiClient["races"][":id"]["join"]>;
     };
   };
+  runners?: {
+    scan?: MockedApi<ApiClient["runners"]["scan"]>;
+  };
 };
 
 export type AppContextOverrides = {
@@ -39,6 +42,11 @@ function testContext(overrides: AppContextOverrides): AppContextValue {
           $post:
             overrides.api?.races?.[":id"]?.join?.$post ?? mockJSONRequest(null),
         },
+      },
+    },
+    runners: {
+      scan: {
+        $post: overrides.api?.runners?.scan?.$post ?? mockJSONRequest(null),
       },
     },
   } as unknown as ApiClient;

@@ -116,3 +116,72 @@ describe("races", () => {
     expect(res.status).toBe(404);
   });
 });
+
+describe("runners.scan", () => {
+  it("creates a runner, records a lap, and returns the lap count", async () => {
+    const { client, seed } = await setup();
+    await seed({
+      race: [{ id: uuid(0), name: "Spring 5k" }],
+      user: [{ sub: "user", name: "user", selectedRace: uuid(0) }],
+    });
+
+    const res = await client.runners.scan.$post(
+      { json: { data: "bib:42" } },
+      await headers("user"),
+    );
+    expect(res.status).toBe(200);
+
+    const body = await res.json();
+    expect(body.race).toEqual({ id: uuid(0), name: "Spring 5k" });
+    expect(body.lapCount).toBe(1);
+    expect(body.runner.info).toEqual("bib:42");
+  });
+
+  it("keeps the same runner and original info on repeat scans, incrementing the lap count", async () => {
+    const { client, seed } = await setup();
+    await seed({
+      race: [{ id: uuid(0), name: "Spring 5k" }],
+      user: [{ sub: "user", name: "user", selectedRace: uuid(0) }],
+    });
+
+    const first = await client.runners.scan.$post(
+      { json: { data: "bib:42" } },
+      await headers("user"),
+    );
+    const second = await client.runners.scan.$post(
+      { json: { data: "bib:42" } },
+      await headers("user"),
+    );
+
+    const firstBody = await first.json();
+    const secondBody = await second.json();
+    expect(secondBody.runner.ref).toEqual(firstBody.runner.ref);
+    expect(secondBody.runner.info).toEqual("bib:42");
+    expect(secondBody.lapCount).toBe(2);
+  });
+
+  it("400s when no race is selected", async () => {
+    const { client, seed } = await setup();
+    await seed({ user: [{ sub: "user", name: "user" }] });
+
+    const res = await client.runners.scan.$post(
+      { json: { data: "bib:42" } },
+      await headers("user"),
+    );
+    expect(res.status).toBe(400);
+  });
+
+  it("400s for empty data", async () => {
+    const { client, seed } = await setup();
+    await seed({
+      race: [{ id: uuid(0), name: "Spring 5k" }],
+      user: [{ sub: "user", name: "user", selectedRace: uuid(0) }],
+    });
+
+    const res = await client.runners.scan.$post(
+      { json: { data: "" } },
+      await headers("user"),
+    );
+    expect(res.status).toBe(400);
+  });
+});

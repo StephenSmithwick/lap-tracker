@@ -1,4 +1,4 @@
-import type { LapData, RaceData } from "@/api";
+import type { LapData, RaceData, RunnerData, ScanResult } from "@/api";
 import { vi } from "vitest";
 
 export function testLap(overrides: Partial<LapData> = {}): LapData {
@@ -15,6 +15,25 @@ export function testRace(overrides: Partial<RaceData> = {}): RaceData {
   return {
     id: uuid(1),
     name: "Spring 5k",
+    ...overrides,
+  };
+}
+
+export function testRunner(overrides: Partial<RunnerData> = {}): RunnerData {
+  return {
+    ref: uuid(2),
+    info: "Runner Bib 42",
+    ...overrides,
+  };
+}
+
+export function testScanResult(
+  overrides: Partial<ScanResult> = {},
+): ScanResult {
+  return {
+    runner: testRunner(),
+    race: testRace(),
+    lapCount: 1,
     ...overrides,
   };
 }
