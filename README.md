@@ -43,7 +43,7 @@ To upload them in bulk the easiest way is to add them all from the .env file:
 
 To add a single new secret: `npx wrangler secret put ENV_VARIABLE`
 
-(see `.dev.vars.example` for all secrets used by the app)
+(see `example.env` for all secrets used by the app)
 
 ### Updating Cloudflare Bindings types
 To re-generate typescript types for cloudflare bindings:

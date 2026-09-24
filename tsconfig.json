@@ -12,10 +12,10 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
     },
   },
-  "include": ["src/**/*", "worker-configuration.d.ts"],
+  "include": ["./src/**/*", "worker-configuration.d.ts"],
 }

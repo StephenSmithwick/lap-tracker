@@ -2,7 +2,7 @@ import { context } from "@/context";
 import { Component, createSignal, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 
-export const CreateRace: Component<Params> = () => {
+export const CreateRace: Component = () => {
   const navigate = useNavigate();
 
   const { api } = context();
@@ -18,7 +18,7 @@ export const CreateRace: Component<Params> = () => {
     try {
       const res = await api.races.$post({ json: { name } });
       if (res.ok) {
-        navigate("/race/create");
+        navigate("/race/qr");
       } else {
         setError("Failed to create race");
       }
