@@ -55,6 +55,14 @@ export const createAPI = (loadDB: LoadDB) =>
         .where(eq(user.sub, authUser(c).sub));
       return c.json(result);
     })
+    .get("/races", async (c) => {
+      const rows = await db(c)
+        .select({ id: race.id, name: race.name })
+        .from(userRace)
+        .innerJoin(race, eq(race.id, userRace.race))
+        .where(eq(userRace.user, authUser(c).sub));
+      return c.json<RaceData[]>(rows);
+    })
     .post("/races", async (c) => {
       const { name } = await c.req.json<{ name: string }>();
       if (!name?.trim())

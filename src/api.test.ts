@@ -55,6 +55,22 @@ describe("laps.$get", () => {
 });
 
 describe("races", () => {
+  it("lists only races the user belongs to", async () => {
+    const { client, seed } = await setup();
+    await seed({
+      user: [{ sub: "user", name: "user" }],
+      race: [
+        { id: uuid(1), name: "Spring 5k" },
+        { id: uuid(2), name: "Other race" },
+      ],
+      userRace: [{ user: "user", race: uuid(1) }],
+    });
+
+    const res = await client.races.$get({}, await headers("user"));
+
+    expect(await res.json()).toEqual([{ id: uuid(1), name: "Spring 5k" }]);
+  });
+
   it("creates a race, grants access, and selects it", async () => {
     const { client, seed } = await setup();
     await seed({ user: [{ sub: "user", name: "user" }] });

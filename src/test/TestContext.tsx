@@ -10,7 +10,7 @@ type MockedApi<T> = { [K in keyof T]?: Mock };
 
 type ApiOverrides = {
   laps?: MockedApi<ApiClient["laps"]>;
-  races?: MockedApi<Pick<ApiClient["races"], "$post">> & {
+  races?: MockedApi<Pick<ApiClient["races"], "$get" | "$post">> & {
     selected?: MockedApi<ApiClient["races"]["selected"]>;
     ":id"?: {
       join?: MockedApi<ApiClient["races"][":id"]["join"]>;
@@ -33,6 +33,7 @@ function testContext(overrides: AppContextOverrides): AppContextValue {
       ...overrides.api?.laps,
     },
     races: {
+      $get: overrides.api?.races?.$get ?? mockJSONRequest([]),
       $post: overrides.api?.races?.$post ?? mockJSONRequest(null),
       selected: {
         $get: overrides.api?.races?.selected?.$get ?? mockJSONRequest(null),

@@ -45,8 +45,8 @@ const root = new Hono<{ Bindings: CloudflareBindings }>()
   .get("/race/qr", renderPage)
   .use("/race/scan", requireAuthPage)
   .get("/race/scan", renderPage)
-  .use("/race/create", requireAuthPage)
-  .get("/race/create", renderPage)
+  .use("/race/choose", requireAuthPage)
+  .get("/race/choose", renderPage)
   .route("/", api);
 
 export default root;
