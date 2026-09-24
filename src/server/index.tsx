@@ -43,8 +43,6 @@ const root = new Hono<{ Bindings: CloudflareBindings }>()
   .get("/race/laps", renderPage)
   .use("/race/qr", requireAuthPage)
   .get("/race/qr", renderPage)
-  .use("/race/scan", requireAuthPage)
-  .get("/race/scan", renderPage)
   .use("/race/choose", requireAuthPage)
   .get("/race/choose", renderPage)
   .route("/", api);

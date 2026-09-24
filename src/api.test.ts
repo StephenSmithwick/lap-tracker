@@ -101,6 +101,37 @@ describe("races", () => {
     expect(res.status).toBe(400);
   });
 
+  it("previews a race by id without granting access or selecting it", async () => {
+    const { client, seed } = await setup();
+    await seed({
+      user: [{ sub: "user", name: "user" }],
+      race: [{ id: uuid(3), name: "Trail Run" }],
+    });
+
+    const res = await client.races[":id"].$get(
+      { param: { id: uuid(3) } },
+      await headers("user"),
+    );
+    expect(await res.json()).toEqual({ id: uuid(3), name: "Trail Run" });
+
+    const selectedRes = await client.races.selected.$get(
+      {},
+      await headers("user"),
+    );
+    expect(await selectedRes.json()).toBeNull();
+  });
+
+  it("404s previewing an unknown race id", async () => {
+    const { client, seed } = await setup();
+    await seed({ user: [{ sub: "user", name: "user" }] });
+
+    const res = await client.races[":id"].$get(
+      { param: { id: uuid(9) } },
+      await headers("user"),
+    );
+    expect(res.status).toBe(404);
+  });
+
   it("joins an existing race and makes it the user's selected race", async () => {
     const { client, seed } = await setup();
     await seed({

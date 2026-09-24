@@ -1,4 +1,5 @@
 import { ChooseRaceView } from "./ChooseRaceView";
+import { ConfirmRaceView } from "./ConfirmRaceView";
 import { LapsView } from "./LapsView";
 import { PopupView } from "./PopupView";
 import { SelectedRaceQRView } from "./SelectedRaceQRView";
@@ -9,4 +10,5 @@ export const loadViews = ({ container }: { container: HTMLElement }) => ({
   popup: async () => await loadView(container, PopupView),
   selectedRaceQr: async () => await loadView(container, SelectedRaceQRView),
   chooseRace: async () => await loadView(container, ChooseRaceView),
+  confirmRace: async () => await loadView(container, ConfirmRaceView),
 });

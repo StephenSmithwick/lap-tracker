@@ -89,6 +89,16 @@ export const createAPI = (loadDB: LoadDB) =>
 
       return c.json<RaceData | null>(row ?? null);
     })
+    .get("/races/:id", async (c) => {
+      const id = c.req.param("id");
+      const [found] = await db(c)
+        .select({ id: race.id, name: race.name })
+        .from(race)
+        .where(eq(race.id, id));
+      if (!found) throw new HTTPException(404, { message: "Race not found" });
+
+      return c.json<RaceData>(found);
+    })
     .post("/races/:id/join", async (c) => {
       const id = c.req.param("id");
       const [found] = await db(c)

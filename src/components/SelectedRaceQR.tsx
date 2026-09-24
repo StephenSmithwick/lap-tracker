@@ -2,6 +2,7 @@ import { Component, createResource, Show, Suspense } from "solid-js";
 import QRCode from "qrcode";
 import { context } from "@/context";
 import type { RaceData } from "@/api";
+import { raceQrData } from "@/qr";
 
 export const ShowRaceQR: Component = () => {
   const { api } = context();
@@ -11,7 +12,7 @@ export const ShowRaceQR: Component = () => {
     return race
       ? {
           race,
-          svg: await QRCode.toString(race.id, { type: "svg" }),
+          svg: await QRCode.toString(raceQrData(race.id), { type: "svg" }),
         }
       : undefined;
   });
