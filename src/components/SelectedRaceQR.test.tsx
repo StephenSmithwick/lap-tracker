@@ -18,8 +18,7 @@ describe("SelectedRaceQR", () => {
     );
 
     const showRaceQr = await views.selectedRaceQr();
-    await waitFor(() => expect(showRaceQr.raceName()).toBe("Spring 5k"));
-    expect(showRaceQr.hasQrCode()).toBe(true);
+    await waitFor(() => expect(showRaceQr.hasQrCode()).toBe(true));
   });
 
   it("lets the user know no race is selected", async () => {

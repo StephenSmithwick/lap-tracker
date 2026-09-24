@@ -17,11 +17,11 @@ interface AppProps {
 const Layout: Component<RouteSectionProps> = (props) => (
   <>
     <nav>
-      <A href="/">Scan</A>
-      <A href="/race"> | Race Summary</A>
-      <A href="/race/qr"> | Share Race</A>
-      <A href="/race/choose"> | Choose Race</A>
+      <A href="/">Scan | </A>
+      <A href="/race">Race Summary | </A>
+      <A href="/race/qr">Share Race</A>
     </nav>
+    <ChooseRace />
     {props.children}
   </>
 );
@@ -34,7 +34,6 @@ export const App: Component<AppProps> = (props) => {
         <Route path="/" component={Scan} />
         <Route path="/race" component={Laps} />
         <Route path="/race/qr" component={ShowRaceQR} />
-        <Route path="/race/choose" component={ChooseRace} />
       </Router>
     </AppContext.Provider>
   );

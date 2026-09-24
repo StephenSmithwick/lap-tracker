@@ -21,13 +21,9 @@ export const ShowRaceQR: Component = () => {
     <div class="show-race-qr">
       <Suspense fallback={<p>Loading race...</p>}>
         <Show when={raceDetails()} fallback={<p>No race selected.</p>}>
-          {(details) => (
-            <>
-              <h2>{details().race.name}</h2>
-              {/* eslint-disable-next-line solid/no-innerhtml -- SVG is generated */}
-              <div innerHTML={details().svg} />
-            </>
-          )}
+          {
+            (details) => <div innerHTML={details().svg} /> // eslint-disable-line solid/no-innerhtml -- SVG is generated
+          }
         </Show>
       </Suspense>
     </div>

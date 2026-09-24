@@ -12,6 +12,10 @@ export class ChooseRaceView extends View {
     return this.$(".solid-select-input") as HTMLInputElement;
   }
 
+  get selectedValue() {
+    return this.$(".solid-select-single-value")?.textContent;
+  }
+
   open() {
     fireEvent.click(this.$(".solid-select-control")!);
   }

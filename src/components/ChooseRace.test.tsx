@@ -1,11 +1,35 @@
 import { expect, describe, it, vi } from "vitest";
 import { render, waitFor } from "@solidjs/testing-library";
 import { ChooseRace } from "./ChooseRace";
-import { TestRouter } from "@/test/TestRouter";
+import { TestContext } from "@/test/TestContext";
 import { mockJSONRequest, testRace, uuid } from "@/test/fixtures";
 import { loadViews } from "@/test/Views/";
 
 describe("ChooseRace", () => {
+  it("shows the currently selected race as the initial value", async () => {
+    const $get = mockJSONRequest([
+      testRace({ id: uuid(1), name: "Spring 5k" }),
+    ]);
+    const selected$get = mockJSONRequest(
+      testRace({ id: uuid(1), name: "Spring 5k" }),
+    );
+
+    const views = loadViews(
+      render(() => (
+        <TestContext
+          api={{ races: { $get, selected: { $get: selected$get } } }}
+        >
+          <ChooseRace />
+        </TestContext>
+      )),
+    );
+
+    const chooseRace = await views.chooseRace();
+    await waitFor(() =>
+      expect(chooseRace.selectedValue).toStrictEqual("Spring 5k"),
+    );
+  });
+
   it("lets the user pick a race they already belong to", async () => {
     const $get = mockJSONRequest([
       testRace({ id: uuid(1), name: "Spring 5k" }),
@@ -15,9 +39,11 @@ describe("ChooseRace", () => {
 
     const views = loadViews(
       render(() => (
-        <TestRouter api={{ races: { $get, ":id": { join: { $post: join$post } } } }}>
+        <TestContext
+          api={{ races: { $get, ":id": { join: { $post: join$post } } } }}
+        >
           <ChooseRace />
-        </TestRouter>
+        </TestContext>
       )),
     );
 
@@ -39,9 +65,9 @@ describe("ChooseRace", () => {
 
     const views = loadViews(
       render(() => (
-        <TestRouter api={{ races: { $get, $post } }}>
+        <TestContext api={{ races: { $get, $post } }}>
           <ChooseRace />
-        </TestRouter>
+        </TestContext>
       )),
     );
 
@@ -67,9 +93,11 @@ describe("ChooseRace", () => {
 
     const views = loadViews(
       render(() => (
-        <TestRouter api={{ races: { $get, ":id": { join: { $post: join$post } } } }}>
+        <TestContext
+          api={{ races: { $get, ":id": { join: { $post: join$post } } } }}
+        >
           <ChooseRace />
-        </TestRouter>
+        </TestContext>
       )),
     );
 
