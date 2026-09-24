@@ -18,7 +18,7 @@ type ApiOverrides = {
   };
 };
 
-type AppContextOverrides = {
+export type AppContextOverrides = {
   api?: ApiOverrides;
   scanner?: QrScanner;
 };
@@ -37,8 +37,7 @@ function testContext(overrides: AppContextOverrides): AppContextValue {
       ":id": {
         join: {
           $post:
-            overrides.api?.races?.[":id"]?.join?.$post ??
-            mockJSONRequest(null),
+            overrides.api?.races?.[":id"]?.join?.$post ?? mockJSONRequest(null),
         },
       },
     },

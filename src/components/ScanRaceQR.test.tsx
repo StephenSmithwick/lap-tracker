@@ -1,17 +1,16 @@
 import { expect, describe, it, vi } from "vitest";
-import { render, screen, fireEvent } from "@solidjs/testing-library";
+import { render } from "@solidjs/testing-library";
 import { ScanRaceQR } from "./ScanRaceQR";
 import { TestContext } from "@/test/TestContext";
 import { mockJSONRequest, testRace, uuid } from "@/test/fixtures";
 import type { QrScanner } from "@/scanner";
-import { loadViews } from "@/test/Views";
+import { loadViews } from "@/test/Views/";
 
 function fakeScanner() {
   let decode: ((text: string) => void) | undefined;
   const scanner: QrScanner = {
     start: (_video, onDecode) => {
       decode = onDecode;
-      return () => {};
     },
     stop: () => {},
   };

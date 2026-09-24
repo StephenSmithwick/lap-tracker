@@ -1,4 +1,4 @@
-import { View } from "@/test/View";
+import { View } from "./View";
 
 export class LapsView extends View {
   static selector = ".laps";

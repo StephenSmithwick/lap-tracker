@@ -27,5 +27,6 @@ export function uuid(id: number) {
 export const jsonResponse = (json: unknown) =>
   new Response(JSON.stringify(json));
 
-export const mockJSONRequest = (object: unknown) =>
-  vi.fn().mockResolvedValue(jsonResponse(object));
+export const mockJSONRequest = (result: unknown) => {
+  return vi.fn().mockResolvedValue(jsonResponse(result));
+};
