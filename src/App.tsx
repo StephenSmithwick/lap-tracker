@@ -18,8 +18,8 @@ const Layout: Component<RouteSectionProps> = (props) => (
   <>
     <nav>
       <A href="/">Scan</A>
-      <A href="/race/laps"> | Race Summary</A>
-      <A href="/race/qr"> | Selected Race QR</A>
+      <A href="/race"> | Race Summary</A>
+      <A href="/race/qr"> | Share Race</A>
       <A href="/race/choose"> | Choose Race</A>
     </nav>
     {props.children}
@@ -32,7 +32,7 @@ export const App: Component<AppProps> = (props) => {
     <AppContext.Provider value={{ api: props.api, scanner: props.scanner }}>
       <Router url={props.url ?? ""} root={Layout}>
         <Route path="/" component={Scan} />
-        <Route path="/race/laps" component={Laps} />
+        <Route path="/race" component={Laps} />
         <Route path="/race/qr" component={ShowRaceQR} />
         <Route path="/race/choose" component={ChooseRace} />
       </Router>
