@@ -10,7 +10,11 @@ interface ConfirmRaceProps {
 export const ConfirmRace: Component<ConfirmRaceProps> = (props) => (
   <div class="confirm-race" role="alertdialog">
     <p>Switch to race "{props.race.name}"?</p>
-    <button onClick={() => props.onConfirm()}>Switch</button>
-    <button onClick={() => props.onCancel()}>Cancel</button>
+    <button class="confirm" onClick={() => props.onConfirm()}>
+      Switch
+    </button>
+    <button class="cancel" onClick={() => props.onCancel()}>
+      Cancel
+    </button>
   </div>
 );

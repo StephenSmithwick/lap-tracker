@@ -76,7 +76,7 @@ export const ChooseRace: Component = () => {
               </For>
             </optgroup>
             <optgroup label="Actions">
-              <option value={NEW_RACE}>new</option>
+              <option value={NEW_RACE}>➕ New</option>
             </optgroup>
           </select>
         </Suspense>

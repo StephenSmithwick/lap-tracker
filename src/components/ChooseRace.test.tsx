@@ -24,11 +24,11 @@ describe("ChooseRace", () => {
     // races() hasn't resolved yet - the select must not default to
     // "+ New race..." here, since that selection wouldn't reset once
     // races load in.
-    expect(chooseRace.selectedValue).not.toStrictEqual("new");
+    expect(chooseRace.selectedValue).not.toStrictEqual("➕ New");
 
     resolveRaces(jsonResponse([testRace({ id: uuid(1), name: "Spring 5k" })]));
     await waitFor(() => expect(chooseRace.options()).toContain("Spring 5k"));
-    expect(chooseRace.selectedValue).not.toStrictEqual("new");
+    expect(chooseRace.selectedValue).not.toStrictEqual("➕ New");
   });
 
   it("shows the currently selected race as the initial value", async () => {
@@ -96,8 +96,8 @@ describe("ChooseRace", () => {
     );
 
     const chooseRace = await views.chooseRace();
-    await waitFor(() => expect(chooseRace.options()).toContain("new"));
-    chooseRace.choose("new");
+    await waitFor(() => expect(chooseRace.options()).toContain("➕ New"));
+    chooseRace.choose("➕ New");
 
     const createRace = await views.createRace();
     createRace.setName("Fall 10k");
@@ -121,8 +121,8 @@ describe("ChooseRace", () => {
     );
 
     const chooseRace = await views.chooseRace();
-    await waitFor(() => expect(chooseRace.options()).toContain("new"));
-    chooseRace.choose("new");
+    await waitFor(() => expect(chooseRace.options()).toContain("➕ New"));
+    chooseRace.choose("➕ New");
 
     const createRace = await views.createRace();
     createRace.cancel();
