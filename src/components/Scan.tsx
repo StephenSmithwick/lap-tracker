@@ -15,11 +15,7 @@ function name({ info }: RunnerData): string | undefined {
 export const Scan: Component = () => {
   const { api, scanner, popup } = context();
   let video: HTMLVideoElement | undefined;
-
-  setTimeout(() => {
-    console.log("Hello");
-    popup.set({ message: "Hello", type: "success" });
-  }, 2000);
+  let processing = false;
 
   const [pendingRace, setPendingRace] = createSignal<RaceData>();
 
@@ -84,11 +80,18 @@ export const Scan: Component = () => {
   };
 
   const onDecode = async (data: string) => {
-    const raceId = parseRaceId(data);
-    if (raceId) {
-      await scanRace(raceId);
-    } else {
-      await scanRunner(data);
+    const trimmed = data.trim();
+    if (!trimmed || processing) return;
+    processing = true;
+    try {
+      const raceId = parseRaceId(trimmed);
+      if (raceId) {
+        await scanRace(raceId);
+      } else {
+        await scanRunner(trimmed);
+      }
+    } finally {
+      processing = false;
     }
   };
 

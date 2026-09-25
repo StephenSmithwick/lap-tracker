@@ -166,8 +166,9 @@ main {
 
 /* The camera view is full-bleed. Every other page gets its own padding
    instead, plus bottom clearance so its content doesn't end up hidden
-   under the floating toolbar. */
-main > *:not(.scan) {
+   under the floating toolbar. The popup toast is excluded since it floats
+   above whichever page is showing and positions itself. */
+main > *:not(.scan):not(.popup) {
     margin: 0;
     padding: var(--spacing-md);
     padding-top: calc(var(--spacing-md) + env(safe-area-inset-top, 0px));
