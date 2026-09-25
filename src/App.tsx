@@ -16,13 +16,15 @@ interface AppProps {
 
 const Layout: Component<RouteSectionProps> = (props) => (
   <>
-    <nav>
-      <A href="/">Scan | </A>
-      <A href="/race">Race Summary | </A>
-      <A href="/race/qr">Share Race</A>
-    </nav>
-    <ChooseRace />
-    {props.children}
+    <main>{props.children}</main>
+    <footer>
+      <nav>
+        <A href="/">Scan</A>
+        <A href="/race">Summary</A>
+        <A href="/race/qr">Share</A>
+      </nav>
+      <ChooseRace />
+    </footer>
   </>
 );
 

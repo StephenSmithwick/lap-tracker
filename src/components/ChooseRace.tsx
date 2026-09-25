@@ -41,6 +41,7 @@ export const ChooseRace: Component = () => {
     <div class="choose-race">
       <Select
         {...selectProps}
+        class="race-select"
         initialValue={selected()}
         placeholder="Select or create a race"
         onChange={chooseRace}
