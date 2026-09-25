@@ -8,31 +8,27 @@ export class ChooseRaceView extends View {
     return this.$('p[role="alert"]')?.textContent;
   }
 
-  private get input() {
-    return this.$(".solid-select-input") as HTMLInputElement;
+  private get select() {
+    return this.$("select") as HTMLSelectElement | null;
   }
 
   get selectedValue() {
-    return this.$(".solid-select-single-value")?.textContent;
-  }
-
-  open() {
-    fireEvent.click(this.$(".solid-select-control")!);
-  }
-
-  search(value: string) {
-    fireEvent.input(this.input, { target: { value } });
+    return this.select?.selectedOptions[0]?.textContent;
   }
 
   options() {
-    return this.$$(".solid-select-option").map((el) => el.textContent);
+    return this.$$("select option").map((el) => el.textContent);
   }
 
   choose(text: string) {
-    const option = this.$$(".solid-select-option").find(
+    const option = this.$$("select option").find(
       (el) => el.textContent === text,
-    );
+    ) as HTMLOptionElement | undefined;
     if (!option) throw new Error(`Option "${text}" not found`);
-    fireEvent.click(option);
+    fireEvent.change(this.select!, { target: { value: option.value } });
+  }
+
+  get isCreating() {
+    return !!this.$(".create-race");
   }
 }

@@ -15,7 +15,7 @@ export const renderer = jsxRenderer(({ children }) => (
       />
       <meta name="theme-color" content="#ffffff" />
       <link rel="manifest" href="/manifest.webmanifest" />
-      <title>Lap Tracker</title>
+      <title>Laps</title>
       {raw(generateHydrationScript())}
       <ViteClient />
       <Link href="/src/style.css" rel="stylesheet" />

@@ -16,8 +16,10 @@
     --border-radius: 8px;
     /* Rough clearance for the floating bottom toolbar - it overlays
        content rather than pushing it up, so anything that shouldn't be
-       hidden underneath it needs at least this much bottom offset. */
-    --toolbar-clearance: 3.25rem;
+       hidden underneath it needs at least this much bottom offset. The
+       toolbar can wrap onto two rows (nav pills + selector) on narrow
+       screens, so this allows for that taller case. */
+    --toolbar-clearance: 6rem;
 }
 
 html,
@@ -67,12 +69,6 @@ footer {
     padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0px));
 }
 
-/* Compact pill buttons, styled after the overlay controls in the iOS
-   camera app: small, fully rounded, frosted-glass fill rather than
-   underlined, with the current page picked out in solid accent color
-   (solid-router sets .active/.inactive on the <A> itself). The frosted
-   fill (translucent + blurred) keeps dark text legible whether it's
-   floating over the black camera feed or a page's own light background. */
 nav {
     display: flex;
     gap: var(--spacing-sm);
@@ -80,9 +76,9 @@ nav {
 }
 
 nav a {
-    padding: 0.4rem 0.5rem;
+    padding: 0.5rem 0.9rem;
     border-radius: 999px;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
@@ -100,41 +96,54 @@ nav a.active {
     color: var(--card-bg);
 }
 
-/* The race selector complements the nav pills - same pill shape, accent
-   border and frosted fill - and takes whatever room the nav didn't need. */
 .choose-race {
     flex: 1 1 160px;
     min-width: 0;
 }
 
-div.race-select {
+.choose-race {
     width: 100%;
-    border-radius: 999px;
-    background-color: rgba(1, 9, 62, 0.55);
-}
-
-.race-select .solid-select-control {
     border: 1.5px solid var(--accent-color);
-    border-radius: inherit;
-    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    color: var(--text-main);
     background-color: rgba(255, 255, 255, 0.55);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    padding: 0 0.9rem;
+    overflow: hidden;
 }
 
-.race-select .solid-select-list {
-    color: var(--card-bg);
-    bottom: 100%;
-    margin-top: 0;
-    margin-bottom: 0.25rem;
-    padding-left: 0;
-    padding-right: 0;
+.choose-race form {
+    margin-right: -1em;
 }
 
-.race-select .solid-select-option[data-focused="true"],
-.race-select .solid-select-option:hover {
-    background-color: var(--accent-color);
-    color: var(--card-bg);
+.choose-race button {
+    padding: 0 1em 0 0.7em;
+    border: none;
+    border-radius: 0;
+    color: var(--bg-color);
+    background-color: var(--text-muted);
+}
+
+.choose-race select,
+.create-race input {
+    padding: 0.5rem 0;
+    font: inherit;
+    font-size: 1rem;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    outline: none;
+}
+
+.create-race {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.create-race input {
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 #root {

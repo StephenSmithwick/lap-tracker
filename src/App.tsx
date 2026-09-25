@@ -19,8 +19,12 @@ const Layout: Component<RouteSectionProps> = (props) => (
     <main>{props.children}</main>
     <footer>
       <nav>
-        <A href="/">Scan</A>
-        <A href="/race">Summary</A>
+        <A href="/" end>
+          Scan
+        </A>
+        <A href="/race" end>
+          Summary
+        </A>
         <A href="/race/qr">Share</A>
       </nav>
       <ChooseRace />

@@ -37,3 +37,8 @@ export const loadView = async <V extends View>(
   });
   return new ViewClass(root);
 };
+
+export const viewAccessor =
+  <V extends View>(container: HTMLElement, ViewClass: ViewClass<V>) =>
+  async () =>
+    await loadView(container, ViewClass);
