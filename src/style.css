@@ -171,7 +171,7 @@ main > *:not(.scan) {
     margin: 0;
     padding: var(--spacing-md);
     padding-top: calc(var(--spacing-md) + env(safe-area-inset-top, 0px));
-    padding-bottom: calc(var(--spacing-md) + var(--toolbar-clearance));
+    /*padding-bottom: calc(var(--spacing-md) + var(--toolbar-clearance));*/
 }
 
 .scan {
@@ -187,9 +187,7 @@ main > *:not(.scan) {
     display: block;
 }
 
-/* Feedback overlays sit on top of the camera view, clearing the
-   floating toolbar rather than being hidden underneath it. */
-.scan .popup,
+.popup,
 .scan .confirm-race {
     position: absolute;
     text-align: center;
@@ -213,9 +211,14 @@ main > *:not(.scan) {
     margin: 0;
 }
 
-.scan .popup.error {
+.popup.error {
     background-color: var(--error-bg);
     color: var(--error-color);
+}
+
+.popup.success {
+    background-color: var(--accent-color);
+    color: var(--e);
 }
 
 .laps {

@@ -3,8 +3,15 @@ import { Mock } from "vitest";
 import { AppContext, AppContextValue } from "@/context";
 import { ApiClient } from "@/api";
 import { QrScanner, noopScanner } from "@/scanner";
-import { splitProps, ParentComponent } from "solid-js";
+import {
+  Accessor,
+  createSignal,
+  Show,
+  splitProps,
+  ParentComponent,
+} from "solid-js";
 import { mockJSONRequest } from "./fixtures";
+import { Popup, PopupParams } from "@/components/Popup";
 
 type MockedApi<T> = { [K in keyof T]?: Mock };
 
@@ -24,9 +31,14 @@ type ApiOverrides = {
 export type AppContextOverrides = {
   api?: ApiOverrides;
   scanner?: QrScanner;
+  popup?: {
+    set: (message?: PopupParams) => void;
+  };
 };
 
-function testContext(overrides: AppContextOverrides): AppContextValue {
+function testContext(
+  overrides: AppContextOverrides,
+): [AppContextValue, Accessor<PopupParams | undefined>] {
   const api = {
     laps: {
       $get: mockJSONRequest([]),
@@ -53,14 +65,22 @@ function testContext(overrides: AppContextOverrides): AppContextValue {
     },
   } as unknown as ApiClient;
 
-  return { api, scanner: overrides.scanner ?? noopScanner };
+  const [getPopup, setPopup] = createSignal<PopupParams>();
+  const popup = {
+    set: (message?: PopupParams) => setPopup(message),
+  };
+
+  return [{ api, scanner: overrides.scanner ?? noopScanner, popup }, getPopup];
 }
 
 export const TestContext: ParentComponent<AppContextOverrides> = (props) => {
   const [_, overrides] = splitProps(props, ["children"]);
-  const context = testContext(overrides);
+  const [context, popup] = testContext(overrides);
 
   return (
-    <AppContext.Provider value={context}>{props.children}</AppContext.Provider>
+    <AppContext.Provider value={context}>
+      {props.children}
+      <Show when={popup()}>{(message) => <Popup {...message()} />}</Show>
+    </AppContext.Provider>
   );
 };
